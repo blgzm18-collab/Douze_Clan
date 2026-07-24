@@ -1,1 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 𝓒𝓵𝓪𝓷 𝓓𝓞𝓤𝓩𝓔 👑</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ============ TOKENS ============ */
+        :root {
+            --bg:        #0a0a0a;
+            --surface:   #141414;
+            --surface-2: #1c1c1c;
+            --line:      #2c2c2c;
+            --text:      #f2f2f2;
+            --text-dim:  #8a8a8a;
+            --accent:    #a855f7;
+            --accent-dim: #5c0d15;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            background-image:
+                linear-gradient(var(--line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 48px 48px;
+            background-position: center top;
+            background-attachment: fixed;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ============ HUD LABEL ============ */
+        .hud-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hud-tag::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        /* ============ HEADER ============ */
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--line);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        header p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        /* ============ NAVIGATION ============ */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            padding: 12px 40px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            padding: 4px;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        nav button {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            padding: 9px 18px;
+            cursor: pointer;
+            transition: background 180ms ease, color 180ms ease;
+        }
+
+        nav button:hover {
+            color: var(--accent);
+            background: var(--surface-2);
+        }
+
+        nav button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* ============ MAIN CONTAINER ============ */
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 60px 40px 120px;
+        }
+
+        /* ============ SECTIONS ============ */
+        section {
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+        }
+
+        section h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 32px;
+            color: var(--text);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 20px;
+        }
+
+        section p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            max-width: 58ch;
+        }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-dim);
+        }
+
+        .empty-state-icon {
+            font-size: 3.5em;
+            margin-bottom: 16px;
+            opacity: 0.4;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        /* ============ JOIN SECTION ============ */
+        .join-container {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 14px 32px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 180ms ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+            border-color: var(--accent);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border-color: var(--line);
+            color: var(--text);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        /* ============ MEMBERS GRID ============ */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+            padding: 24px;
+            text-align: center;
+            transition: all 180ms ease;
+        }
+
+        .member-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .member-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+
+        .role-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            border: 1px solid;
+        }
+
+        .role-owner {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: #fbbf24;
+            color: #fbbf24;
+        }
+
+        .role-admin {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .role-member {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ============ PAGE SYSTEM ============ */
+        .page {
+            display: none;
+            animation: fadeIn 300ms ease-in-out;
+        }
+
+        .page.is-active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--line);
+            padding: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        /* ============ PAGE SYSTEM ============ */
+        .page {
+            display: none;
+            animation: fadeIn 300ms ease-in-out;
+        }
+
+        .page.is-active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            header {
+                padding: 40px 20px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav {
+                padding: 12px 20px;
+            }
+
+            .container {
+                padding: 40px 20px 80px;
+            }
+
+            section {
+                padding: 24px;
+            }
+
+            section h2 {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .join-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>👑 𝓒𝓵𝓪𝓷 𝓓𝓞𝓤𝓩𝓔 👑</h1>
+        <p>DOMINATING ROBLOX RIVALS</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><button onclick="showPage('overtakes');">Overtakes</button></li>
+            <li><button onclick="showPage('videos');">Videos</button></li>
+            <li><button onclick="showPage('join');">Join</button></li>
+            <li><button onclick="showPage('members');">Members</button></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Overtakes Page -->
+        <div class="page is-active" id="overtakes">
+            <section>
+                <h2>Overtakes</h2>
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚔️</div>
+                    <p>Showcase our epic overtakes on rival clans. Coming soon...</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Videos Page -->
+        <div class="page" id="videos">
+            <section>
+                <h2>Videos</h2>
+                <div class="empty-state">
+                    <div class="empty-state-icon">📹</div>
+                    <p>Check out our best gameplay moments and clan videos. Coming soon...</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Join Page -->
+        <div class="page" id="join">
+            <section>
+                <h2>Join Our Clan</h2>
+                <p style="margin-bottom: 32px;">
+                    Ready to join one of the most dominant clans in Roblox Rivals? 
+                    Click below to apply and become part of the DOUZE family!
+                </p>
+                <div class="join-container">
+                    <button class="btn btn-primary">Apply to Join</button>
+                    <button class="btn btn-ghost">Discord Server</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Members Page -->
+        <div class="page" id="members">
+            <section>
+                <h2>Active Members</h2>
+            <div class="members-grid">
+                <!-- Clan Owner Example -->
+                <div class="member-card">
+                    <div class="member-name">𝕵𝖎 𝕵𝖆𝖒</div>
+                    <div class="role-tag role-owner">Clan Owner</div>
+                </div>
+
+                <!-- Admin Example -->
+                <div class="member-card">
+                    <div class="member-name">𝕯𝖔𝖓</div>
+                    <div class="role-tag role-admin">Head-Admin</div>
+                </div>
+
+                <!-- Admin Example -->
+                <div class="member-card">
+                    <div class="member-name">Douze_PixelMan</div>
+                    <div class="role-tag role-admin">Admin</div>
+                </div>
+
+                <!-- Member Examples -->
+                <div class="member-card">
+                    <div class="member-name">𝕭𝖆𝖈𝖍𝖎𝖗𝖆</div>
+                    <div class="role-tag role-member">Member</div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">𝓜𝓮𝓭𝔂</div>
+                    <div class="role-tag role-member">Member</div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">𝕭𝕵</div>
+                    <div class="role-tag role-member">Member</div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">𝕭𝖚𝖗𝖌𝖊𝖗</div>
+                    <div class="role-tag role-member">Member</div>
+                </div>
+
+                  <div class="member-card">
+                    <div class="member-name">𝕮𝖔𝖑𝖊</div>
+                    <div class="role-tag role-member">Member</div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-name">𝕲𝖗𝟒𝖘𝖘</div>
+                    <div class="role-tag role-member">Member</div>
+                </div>
+            </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Clan DOUZE - Roblox Rivals</p>
+        <p>Stay Connected. Stay Dominant. 👑</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('is-active');
+            });
+            
+            // Show the selected page
+            const selectedPage = document.getElementById(pageId);
+            if (selectedPage) {
+                selectedPage.classList.add('is-active');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Set first page active on load
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('overtakes');
+        });
+    </script>
+</body>
+</html>
